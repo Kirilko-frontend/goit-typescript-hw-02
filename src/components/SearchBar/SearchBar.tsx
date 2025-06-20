@@ -1,23 +1,25 @@
-import { useState } from "react";
-import { ToastContainer, toast } from "react-toastify"; // імпортуємо toast
-import "react-toastify/dist/ReactToastify.css"; // стилі для toast
+import { useState, FormEvent } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import css from "./SearchBar.module.css";
 
-export default function SearchBar({ onSubmit }) {
+interface SearchBarProps {
+  onSubmit: (value: string) => void;
+}
+
+export default function SearchBar({ onSubmit }: SearchBarProps) {
   const [input, setInput] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Якщо поле вводу порожнє, показуємо повідомлення про помилку
     if (input.trim() === "") {
       toast.error("Поле не може бути порожнім!");
       return;
     }
 
-    // Якщо ввід коректний, викликаємо onSubmit з введеним значенням
     onSubmit(input.trim());
-    setInput(""); // очищаємо поле вводу
+    setInput("");
   };
 
   return (
@@ -35,7 +37,6 @@ export default function SearchBar({ onSubmit }) {
         </button>
       </form>
 
-      {/* Додаємо ToastContainer для відображення повідомлень */}
       <ToastContainer />
     </header>
   );

@@ -2,11 +2,33 @@ import Modal from "react-modal";
 import { useEffect } from "react";
 import style from "./ImageModal.module.css";
 
-Modal.setAppElement("#root"); // обов'язково для accessibility
+interface Image {
+  id: string;
+  alt_description: string | null;
+  urls: {
+    small: string;
+    regular: string;
+  };
+  user: {
+    name: string;
+  };
+}
 
-export default function ImageModal({ isOpen, onClose, image }) {
+interface ImageModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  image: Image;
+}
+
+Modal.setAppElement("#root");
+
+export default function ImageModal({
+  isOpen,
+  onClose,
+  image,
+}: ImageModalProps) {
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         onClose();
       }
@@ -26,7 +48,7 @@ export default function ImageModal({ isOpen, onClose, image }) {
     >
       <img
         src={image.urls.regular}
-        alt={image.alt_description}
+        alt={image.alt_description ?? "Image"}
         className={style.modalImage}
       />
     </Modal>

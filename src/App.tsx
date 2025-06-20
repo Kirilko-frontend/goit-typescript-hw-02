@@ -13,15 +13,33 @@ import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 
 const ACCESS_KEY = "9ZAe8mtCzOyk5YynjrK9cTRc6xqkLy9LHabkOIt9C8I";
 
-function App() {
-  const [query, setQuery] = useState("");
-  const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [page, setPage] = useState(1);
-  const [selectedImage, setSelectedImage] = useState(null);
+interface Image {
+  id: string;
+  alt_description: string | null;
+  urls: {
+    small: string;
+    regular: string;
+  };
+  user: {
+    name: string;
+  };
+}
 
-  const handleSearch = (newQuery) => {
+interface UnsplashResponse {
+  results: Image[];
+  total: number;
+  total_pages: number;
+}
+
+function App() {
+  const [query, setQuery] = useState<string>("");
+  const [images, setImages] = useState<Image[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
+  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
+
+  const handleSearch = (newQuery: string): void => {
     if (newQuery === query) return;
 
     setQuery(newQuery);
@@ -37,7 +55,7 @@ function App() {
       setError(false);
 
       try {
-        const response = await axios.get(
+        const response = await axios.get<UnsplashResponse>(
           "https://api.unsplash.com/search/photos",
           {
             params: {
@@ -71,7 +89,7 @@ function App() {
     fetchImages();
   }, [query, page]);
 
-  const handleLoadMore = () => {
+  const handleLoadMore = (): void => {
     setPage((prevPage) => prevPage + 1);
   };
 
