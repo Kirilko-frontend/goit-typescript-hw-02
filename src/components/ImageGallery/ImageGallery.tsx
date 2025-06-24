@@ -1,16 +1,5 @@
 import css from "./ImageGallery.module.css";
-
-interface Image {
-  id: string;
-  alt_description: string | null;
-  urls: {
-    small: string;
-    regular: string;
-  };
-  user: {
-    name: string;
-  };
-}
+import { Image } from "../../types";
 
 interface ImageGalleryProps {
   images: Image[];

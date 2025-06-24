@@ -10,20 +10,9 @@ import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import Loader from "./components/Loader/Loader";
 import ImageModal from "./components/ImageModal/ImageModal";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
+import { Image } from "../../types";
 
 const ACCESS_KEY = "9ZAe8mtCzOyk5YynjrK9cTRc6xqkLy9LHabkOIt9C8I";
-
-interface Image {
-  id: string;
-  alt_description: string | null;
-  urls: {
-    small: string;
-    regular: string;
-  };
-  user: {
-    name: string;
-  };
-}
 
 interface UnsplashResponse {
   results: Image[];
